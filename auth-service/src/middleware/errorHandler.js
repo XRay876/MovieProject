@@ -1,8 +1,8 @@
-import ApiError from '../utils/ApiError';
-import { error } from '../utils/logger';
+import ApiError from '../utils/ApiError.js';
+import logger from '../utils/logger.js';
 
 function errorHandler(err, req, res, next) {
-  error(err);
+  logger.error(err);
 
   if (err instanceof ApiError) {
     return res.status(err.statusCode).json({

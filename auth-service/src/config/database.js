@@ -1,15 +1,17 @@
 import { connect } from 'mongoose';
-import { mongoUri } from './env';
-import { info, error } from '../utils/logger';
+import config from './env.js';
+import logger from '../utils/logger.js';
+
+const { mongoUri } = config;
 
 async function connectDatabase() {
   try {
     await connect(mongoUri, {
       autoIndex: true
     });
-    info('Connected to MongoDB');
+    logger.info('Connected to MongoDB');
   } catch (err) {
-    error('Error connecting to MongoDB:', err);
+    logger.error('Error connecting to MongoDB:', err);
     process.exit(1);
   }
 }

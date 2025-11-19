@@ -1,5 +1,5 @@
-import ApiError from '../utils/ApiError';
-import { verifyAccessToken } from '../services/token.service';
+import ApiError from '../utils/ApiError.js';
+import tokenService from '../services/token.service.js';
 
 async function authGuard(req, res, next) {
   try {
@@ -12,7 +12,7 @@ async function authGuard(req, res, next) {
 
     const accessToken = parts[1];
 
-    const payload = verifyAccessToken(accessToken);
+    const payload = tokenService.verifyAccessToken(accessToken);
     if (!payload) {
       throw new ApiError(401, 'Invalid or expired access token');
     }

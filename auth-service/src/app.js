@@ -1,9 +1,11 @@
 import express, { json } from 'express';
 import cors from 'cors';
-import { cors as _cors } from './config/env';
-import authRoutes from './routes/auth.routes';
-import notFound from './middleware/notFound';
-import errorHandler from './middleware/errorHandler';
+import config from './config/env.js';
+import authRoutes from './routes/auth.routes.js';
+import notFound from './middleware/notFound.js';
+import errorHandler from './middleware/errorHandler.js';
+
+const { cors: _cors } = config;
 
 const app = express();
 

@@ -1,7 +1,10 @@
-import { sign, verify } from 'jsonwebtoken';
-import { jwt as _jwt } from '../config/env';
-import Token, { findOne, updateMany } from '../models/Token';
-import ApiError from '../utils/ApiError';
+import pkg from 'jsonwebtoken';
+import config from '../config/env.js';
+import Token from '../models/Token.js';
+import ApiError from '../utils/ApiError.js';
+
+const { jwt: _jwt } = config;
+const { sign, verify } = pkg;
 
 function generateAccessToken(user) {
   const payload = {
@@ -67,21 +70,21 @@ async function saveTokens({ userId, accessToken, refreshToken, userAgent, ip }) 
 }
 
 async function findActiveToken(refreshToken) {
-  return findOne({
+  return Token.findOne({
     refreshToken,
     isRevoked: false
   }).populate('user');
 }
 
 async function revokeToken(refreshToken) {
-  const doc = await findOne({ refreshToken });
+  const doc = await Token.findOne({ refreshToken });
   if (!doc) return;
   doc.isRevoked = true;
   await doc.save();
 }
 
 async function revokeAllTokensForUser(userId) {
-  await updateMany(
+  await Token.updateMany(
     { user: userId, isRevoked: false },
     { $set: { isRevoked: true } }
   );

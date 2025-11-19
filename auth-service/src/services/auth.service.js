@@ -1,16 +1,18 @@
 import { genSalt, hash, compare } from 'bcryptjs';
-import ApiError from '../utils/ApiError';
-import { bcrypt as _bcrypt } from '../config/env';
-import { findByEmail, findByUsername, createUser, findByEmailOrUsername, getById } from './user.service';
-import { generateAccessToken, generateRefreshToken, saveTokens, verifyRefreshToken, findActiveToken, revokeToken, revokeAllTokensForUser } from './token.service';
+import ApiError from '../utils/ApiError.js';
+import config from '../config/env.js';
+import userService from './user.service.js';
+import tokenService from './token.service.js';
+
+const { bcrypt: _bcrypt } = config;
 
 async function register({ username, email, password, userAgent, ip }) {
-  const existingByEmail = await findByEmail(email);
+  const existingByEmail = await userService.findByEmail(email);
   if (existingByEmail) {
     throw new ApiError(409, 'Email is already in use');
   }
 
-  const existingByUsername = await findByUsername(username);
+  const existingByUsername = await userService.findByUsername(username);
   if (existingByUsername) {
     throw new ApiError(409, 'Username is already in use');
   }
@@ -18,12 +20,12 @@ async function register({ username, email, password, userAgent, ip }) {
   const salt = await genSalt(_bcrypt.saltRounds);
   const passwordHash = await hash(password, salt);
 
-  const user = await createUser({ username, email, passwordHash });
+  const user = await userService.createUser({ username, email, passwordHash });
 
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
+  const accessToken = tokenService.generateAccessToken(user);
+  const refreshToken = tokenService.generateRefreshToken(user);
 
-  await saveTokens({
+  await tokenService.saveTokens({
     userId: user._id,
     accessToken,
     refreshToken,
@@ -46,7 +48,7 @@ async function register({ username, email, password, userAgent, ip }) {
 }
 
 async function login({ emailOrUsername, password, userAgent, ip }) {
-  const user = await findByEmailOrUsername(emailOrUsername);
+  const user = await userService.findByEmailOrUsername(emailOrUsername);
   if (!user) {
     throw new ApiError(401, 'Invalid credentials');
   }
@@ -56,10 +58,10 @@ async function login({ emailOrUsername, password, userAgent, ip }) {
     throw new ApiError(401, 'Invalid credentials');
   }
 
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
+  const accessToken = tokenService.generateAccessToken(user);
+  const refreshToken = tokenService.generateRefreshToken(user);
 
-  await saveTokens({
+  await tokenService.saveTokens({
     userId: user._id,
     accessToken,
     refreshToken,
@@ -82,12 +84,12 @@ async function login({ emailOrUsername, password, userAgent, ip }) {
 }
 
 async function refresh({ refreshToken, userAgent, ip }) {
-  const decoded = verifyRefreshToken(refreshToken);
+  const decoded = tokenService.verifyRefreshToken(refreshToken);
   if (!decoded) {
     throw new ApiError(401, 'Invalid or expired refresh token');
   }
 
-  const tokenDoc = await findActiveToken(refreshToken);
+  const tokenDoc = await tokenService.findActiveToken(refreshToken);
   if (!tokenDoc) {
     throw new ApiError(401, 'Refresh token not found or revoked');
   }
@@ -97,12 +99,12 @@ async function refresh({ refreshToken, userAgent, ip }) {
     throw new ApiError(401, 'User not found for this token');
   }
 
-  await revokeToken(refreshToken);
+  await tokenService.revokeToken(refreshToken);
 
-  const newAccessToken = generateAccessToken(user);
-  const newRefreshToken = generateRefreshToken(user);
+  const newAccessToken = tokenService.generateAccessToken(user);
+  const newRefreshToken = tokenService.generateRefreshToken(user);
 
-  await saveTokens({
+  await tokenService.saveTokens({
     userId: user._id,
     accessToken: newAccessToken,
     refreshToken: newRefreshToken,
@@ -125,15 +127,15 @@ async function refresh({ refreshToken, userAgent, ip }) {
 }
 
 async function logout({ refreshToken }) {
-  await revokeToken(refreshToken);
+  await tokenService.revokeToken(refreshToken);
 }
 
 async function logoutAll({ userId }) {
-  await revokeAllTokensForUser(userId);
+  await tokenService.revokeAllTokensForUser(userId);
 }
 
 async function getMe(userId) {
-  const user = await getById(userId);
+  const user = await userService.getById(userId);
   if (!user) {
     throw new ApiError(404, 'User not found');
   }

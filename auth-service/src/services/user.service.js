@@ -1,15 +1,15 @@
-import User, { findOne, findById } from '../models/User';
+import User from '../models/User.js';
 
 async function findByEmail(email) {
-  return findOne({ email });
+  return User.findOne({ email });
 }
 
 async function findByUsername(username) {
-  return findOne({ username });
+  return User.findOne({ username });
 }
 
 async function findByEmailOrUsername(identifier) {
-  return findOne({
+  return User.findOne({
     $or: [{ email: identifier.toLowerCase() }, { username: identifier }]
   });
 }
@@ -24,7 +24,7 @@ async function createUser({ username, email, passwordHash }) {
 }
 
 async function getById(id) {
-  return findById(id);
+  return User.findById(id);
 }
 
 export default {
