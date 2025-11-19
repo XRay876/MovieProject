@@ -1,0 +1,25 @@
+extends ../layouts/base
+
+block content
+  .container
+    h1 Register
+
+    if errors && errors.length
+      ul.form-errors
+        each e in errors
+          li #{e.msg}
+
+    form(method="post" action="/auth/register")
+      label(for="username") Username
+      input#username(type="text" name="username" value=(values && values.username) )
+
+      label(for="email") Email
+      input#email(type="email" name="email" value=(values && values.email) )
+
+      label(for="password") Password
+      input#password(type="password" name="password")
+
+      label(for="confirmPassword") Confirm Password
+      input#confirmPassword(type="password" name="confirmPassword")
+
+      button(type="submit") Register

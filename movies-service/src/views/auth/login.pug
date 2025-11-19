@@ -1,0 +1,19 @@
+extends ../layouts/base
+
+block content
+  .container
+    h1 Login
+
+    if errors && errors.length
+      ul.form-errors
+        each e in errors
+          li #{e.msg}
+
+    form(method="post" action="/auth/login")
+      label(for="emailOrUsername") Email or Username
+      input#emailOrUsername(type="text" name="emailOrUsername" value=(values && values.emailOrUsername) )
+
+      label(for="password") Password
+      input#password(type="password" name="password")
+
+      button(type="submit") Login

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import methodOverride from 'method-override';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,6 +10,7 @@ import config from './config/env.js';
 import indexWebRoutes from './routes/web/index.routes.js';
 import moviesWebRoutes from './routes/web/movies.routes.js';
 import moviesApiRoutes from './routes/api/movies.api.routes.js';
+import authRoutes from './routes/auth.routes.js';
 import attachUser from './middleware/attachUser.js';
 import notFound from './middleware/notFound.js';
 import errorHandler from './middleware/errorHandler.js';
@@ -29,6 +31,7 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(attachUser);
@@ -36,6 +39,8 @@ app.use(attachUser);
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'movies-service' });
 });
+
+app.use('/', authRoutes);
 
 app.use('/', indexWebRoutes);
 app.use('/', moviesWebRoutes);

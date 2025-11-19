@@ -13,16 +13,15 @@ html
           if currentUser
             li Hello #{currentUser.username}
             li
-              
-              a(href="#") Logout
+              form(action="/auth/logout" method="post")
+                button(type="submit") Logout
             li
               a(href="/movies/new") Add Movie
           else
             li
-              
-              a(href="#") Login
-              |  / 
-              a(href="#") Register
+              a(href="/auth/login") Login
+            li
+              a(href="/auth/register") Register
     main
       block content
 

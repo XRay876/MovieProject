@@ -21,6 +21,15 @@ const config = {
 
   cors: {
     origin: process.env.CORS_ORIGIN || '*'
+  },
+  authService: {
+    baseUrl: requireEnv('AUTH_SERVICE_URL'),
+    timeout: parseInt(process.env.AUTH_SERVICE_TIMEOUT || '5000', 10)
+  },
+
+  cookies: {
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax'
   }
 };
 
