@@ -1,0 +1,41 @@
+extends ../layouts/base
+
+block content
+  .container
+    h1 Movies
+
+    form(method="get" action="/movies" class="search-form")
+      input(type="text" name="q" placeholder="Search..." value=(query && query.q) )
+      select(name="genre")
+        option(value="") All genres
+        each g in genres
+          if query && query.genre == g
+            option(value=g selected) #{g}
+          else
+            option(value=g) #{g}
+      input(type="number" name="year" placeholder="Year" value=(query && query.year))
+      select(name="sort")
+        option(value="created_desc" selected=(query && query.sort === 'created_desc')) Newest
+        option(value="created_asc" selected=(query && query.sort === 'created_asc')) Oldest
+        option(value="rating_desc" selected=(query && query.sort === 'rating_desc')) Rating (high first)
+        option(value="rating_asc" selected=(query && query.sort === 'rating_asc')) Rating (low first)
+      button(type="submit") Filter
+
+    if currentUser
+      p
+        a.button(href="/movies/new") + Add Movie
+
+    if movies.length
+      .movies-grid
+        each movie in movies
+          include ../partials/_movieCard.pug
+    else
+      p No movies found.
+
+    if pagination
+      .pagination
+        if pagination.hasPrev
+          a(href=`/movies?page=${pagination.page - 1}`) Prev
+        span Page #{pagination.page} of #{pagination.totalPages}
+        if pagination.hasNext
+          a(href=`/movies?page=${pagination.page + 1}`) Next

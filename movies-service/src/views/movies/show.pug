@@ -1,0 +1,17 @@
+extends ../layouts/base
+
+block content
+  .container
+    h1 #{movie.name}
+    p.year #{movie.year} • Rating: #{movie.rating}
+    p.desc #{movie.description}
+    p Genres:
+      each g in movie.genres
+        span.genre-tag #{g}
+
+    if isOwner
+      form(method="get" action=`/movies/${movie._id}/edit`)
+        button(type="submit") Edit
+
+      form(method="post" action=`/movies/${movie._id}/delete`)
+        button(type="submit" class="danger") Delete

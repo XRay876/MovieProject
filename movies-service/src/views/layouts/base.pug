@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title Movies App
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="/css/main.css")
+  body
+    header
+      nav.navbar
+        a(href="/") Movies App
+        ul.nav-links
+          if currentUser
+            li Hello #{currentUser.username}
+            li
+              
+              a(href="#") Logout
+            li
+              a(href="/movies/new") Add Movie
+          else
+            li
+              
+              a(href="#") Login
+              |  / 
+              a(href="#") Register
+    main
+      block content
+
+    script(src="/js/alerts.js")
+    script(src="/js/search.js")
+    script(src="/js/movies.js")

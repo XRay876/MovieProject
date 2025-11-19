@@ -1,0 +1,9 @@
+.article.movie-card
+  h3
+    a(href=`/movies/${movie._id}`) #{movie.name}
+  p.year #{movie.year} • Rating: #{movie.rating}
+  p.desc #{movie.description.substring(0, 150)}...
+  p.genres
+    | Genres:
+    each g, i in movie.genres
+      span.genre-tag #{g}

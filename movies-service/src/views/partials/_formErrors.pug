@@ -1,0 +1,4 @@
+if errors && errors.length
+  ul.form-errors
+    each e in errors
+      li #{e.msg || e.message || e}
