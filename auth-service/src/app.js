@@ -15,6 +15,10 @@ app.use(cors({
 }));
 app.use(json());
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Auth service is running!' });
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'auth-service' });
 });
