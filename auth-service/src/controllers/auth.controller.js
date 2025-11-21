@@ -87,11 +87,35 @@ async function me(req, res, next) {
   }
 }
 
+async function updateProfile(req, res, next) {
+  try {
+    const userId = req.user.id;
+    const { username } = req.body;
+    const updatedUser = await authService.updateUser(userId, { username });
+    return res.status(200).json({ user: updatedUser });
+  } catch (err) {
+    return next(err);
+  }
+}
+
+async function deleteAccount(req, res, next) {
+  try {
+    const userId = req.user.id;
+    const { password } = req.body;
+    await authService.deleteAccount(userId, password);
+    return res.status(204).send();
+  } catch (err) {
+    return next(err);
+  }
+}
+
 export default {
   register,
   login,
   refresh,
   logout,
   logoutAll,
-  me
+  me,
+  updateProfile,
+  deleteAccount
 };

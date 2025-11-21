@@ -48,9 +48,15 @@ const logoutValidation = [
     .notEmpty().withMessage('Refresh token is required')
 ];
 
+const deleteAccountValidation = [
+  body('password').notEmpty().withMessage('Password is required for confirmation')
+];
+
 export default {
   registerValidation,
   loginValidation,
   refreshTokenValidation,
-  logoutValidation
+  logoutValidation,
+  updateProfileValidation: [usernameValidation],
+  deleteAccountValidation
 };

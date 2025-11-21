@@ -147,11 +147,21 @@ async function getMe(userId) {
   };
 }
 
+async function updateUser(userId, updates) {
+  return userService.update(userId, updates);
+}
+
+async function deleteAccount(userId, password) {
+  await userService.delete(userId, password);
+}
+
 export default {
   register,
   login,
   refresh,
   logout,
   logoutAll,
-  getMe
+  getMe,
+  updateUser,
+  deleteAccount
 };

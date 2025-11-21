@@ -154,11 +154,85 @@ async function refresh(req, res, next) {
   }
 }
 
+async function showProfile(req, res) {
+  if (!req.user) {
+    return res.redirect('/auth/login');
+  }
+  return res.render('auth/profile', { user: req.user });
+}
+
+async function showEditProfileForm(req, res) {
+  if (!req.user) {
+    return res.redirect('/auth/login');
+  }
+  return res.render('auth/profile-edit', { user: req.user });
+}
+
+async function updateProfile(req, res, next) {
+  try {
+    const { username } = req.body;
+    const token = req.cookies[ACCESS_COOKIE];
+
+    const { user: updatedUser } = await authClient.updateProfile(token, username);
+    
+    // Redirect to profile with a success message (optional: use flash messages)
+    // For now, simply redirect and the attachUser middleware will fetch the latest user
+    return res.redirect('/profile');
+  } catch (err) {
+    const errors = (err.details || []).map(e => ({
+      msg: e.message || e.msg || err.message,
+      field: e.field || e.param
+    }));
+
+    return res
+      .status(err.statusCode || 400)
+      .render('auth/profile-edit', { // Changed to render profile-edit
+        errors: errors.length ? errors : [{ msg: err.message }],
+        user: req.user // Pass existing user data back to the template
+      });
+  }
+}
+
+async function showDeleteAccountForm(req, res) {
+  if (!req.user) {
+    return res.redirect('/auth/login');
+  }
+  return res.render('auth/profile-delete', { user: req.user });
+}
+
+async function deleteAccount(req, res, next) {
+  try {
+    const { password } = req.body;
+    const token = req.cookies[ACCESS_COOKIE];
+
+    await authClient.deleteAccount(token, password);
+    clearAuthCookies(res, req); // Clear cookies after successful deletion
+    return res.redirect('/'); // Redirect to homepage
+  } catch (err) {
+    const errors = (err.details || []).map(e => ({
+      msg: e.message || e.msg || err.message,
+      field: e.field || e.param
+    }));
+
+    return res
+      .status(err.statusCode || 400)
+      .render('auth/profile-delete', {
+        errors: errors.length ? errors : [{ msg: err.message }],
+        user: req.user // Pass existing user data back to the template
+      });
+  }
+}
+
 export {
   showLoginForm,
   showRegisterForm,
   register,
   login,
   logout,
-  refresh
+  refresh,
+  showProfile,
+  updateProfile,
+  showEditProfileForm,
+  showDeleteAccountForm,
+  deleteAccount
 };

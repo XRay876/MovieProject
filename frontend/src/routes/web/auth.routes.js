@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import validateRequest from '../../middleware/validateRequest.js';
+import authGuard from '../../middleware/authGuard.js';
 import {
   registerValidation,
-  loginValidation
+  loginValidation,
+  profileUpdateValidation,
+  deleteAccountValidation // Added deleteAccountValidation import
 } from '../../validation/auth.validation.js';
 import {
   showLoginForm,
@@ -10,7 +13,12 @@ import {
   register,
   login,
   logout,
-  refresh
+  refresh,
+  showProfile,
+  updateProfile,
+  showEditProfileForm,
+  showDeleteAccountForm, // Added showDeleteAccountForm import
+  deleteAccount // Added deleteAccount import
 } from '../../controllers/web/auth.controller.js';
 
 const router = Router();
@@ -37,4 +45,27 @@ router.post('/auth/logout', logout);
 
 router.post('/auth/refresh', refresh);
 
+router.get('/profile', authGuard, showProfile); // Existing profile GET route
+
+router.get('/profile/edit', authGuard, showEditProfileForm); // New profile edit GET route
+
+router.post( // Profile update POST route (changed from /profile/update)
+  '/profile/edit',
+  authGuard,
+  profileUpdateValidation,
+  validateRequest,
+  updateProfile
+);
+
+router.get('/profile/delete', authGuard, showDeleteAccountForm); // New profile delete GET route
+
+router.post( // Profile delete POST route
+  '/profile/delete',
+  authGuard,
+  deleteAccountValidation,
+  validateRequest,
+  deleteAccount
+);
+
 export default router;
+

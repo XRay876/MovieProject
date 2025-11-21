@@ -74,9 +74,41 @@ async function logout({ refreshToken }) {
   });
 }
 
+async function getMe(token) {
+  return callAuthService('/api/auth/me', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+}
+
+async function updateProfile(token, username) {
+  return callAuthService('/api/auth/profile', {
+    method: 'PUT',
+    body: { username },
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+}
+
+async function deleteAccount(token, password) {
+  return callAuthService('/api/auth/profile', {
+    method: 'DELETE',
+    body: { password },
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+}
+
 export default {
   register,
   login,
   refresh,
-  logout
+  logout,
+  getMe,
+  updateProfile,
+  deleteAccount
 };

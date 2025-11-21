@@ -162,6 +162,15 @@ button.danger:hover, .button.danger:hover {
     background-color: #c53030;
 }
 
+/* Ensure .btn-danger takes precedence */
+.btn-danger {
+    background-color: #e53e3e;
+    color: #ffffff;
+}
+.btn-danger:hover {
+    background-color: #c53030;
+}
+
 /* Forms */
 form {
     background-color: #ffffff;

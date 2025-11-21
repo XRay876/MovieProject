@@ -1,0 +1,16 @@
+extends ../layouts/base.pug
+
+block content
+  .container
+    h1 Profile
+    .profile-info
+      p
+        strong Email:
+        | #{user.email}
+      p
+        strong Member Since:
+        | #{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
+    
+    .profile-actions
+      button.btn.btn-primary(onclick="window.location.href='/profile/edit'") Edit Profile
+      button.btn.btn-danger(onclick="window.location.href='/profile/delete'" style="margin-left: 10px;") Delete Account

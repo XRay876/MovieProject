@@ -1,0 +1,19 @@
+extends ../layouts/base.pug
+
+block content
+  .container
+    h1 Delete Account
+    p Are you sure you want to delete your account? This action cannot be undone.
+
+    form(action="/profile/delete" method="POST")
+      if errors && errors.length > 0
+        ul.form-errors
+          each error in errors
+            li= error.msg
+      .form-group
+        label(for="password") Enter your password to confirm:
+        input#password.form-control(type="password" name="password" required)
+      .form-group
+        button.btn.btn-danger(type="submit") Confirm Deletion
+      .form-group
+        a(href="/profile" class="btn btn-secondary") Cancel

@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "concurrently": "^9.2.1"
+  },
+  "scripts": {
+    "install-all": "concurrently \"npm install --prefix auth-service\" \"npm install --prefix movies-service\" \"npm install --prefix frontend\"",
+    "start-all": "concurrently \"npm start --prefix auth-service\" \"npm start --prefix movies-service\" \"npm start --prefix frontend\""
   }
 }

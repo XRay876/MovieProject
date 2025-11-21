@@ -11,7 +11,8 @@ html
         a(href="/") Movies App
         ul.nav-links
           if currentUser
-            li Hello #{currentUser.username}
+            li
+              a(href="/profile") Hello #{currentUser.username}
             li
               a(href="/auth/logout" id="logout-link") Logout
             li

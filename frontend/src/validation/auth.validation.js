@@ -1,11 +1,13 @@
 import { body } from 'express-validator';
 
+const usernameProfileValidation = body('username')
+  .trim()
+  .notEmpty().withMessage('Username is required')
+  .isLength({ min: 3, max: 20 }).withMessage('Username must be 3-20 characters')
+  .matches(/^[a-zA-Z0-9_]+$/).withMessage('Username must be alphanumeric (underscore allowed)');
+
 const registerValidation = [
-  body('username')
-    .trim()
-    .notEmpty().withMessage('Username is required')
-    .isLength({ min: 3, max: 20 }).withMessage('Username must be 3-20 characters')
-    .matches(/^[a-zA-Z0-9_]+$/).withMessage('Username must be alphanumeric (underscore allowed)'),
+  usernameProfileValidation,
   body('email')
     .normalizeEmail()
     .isEmail().withMessage('Valid email is required'),
@@ -30,7 +32,17 @@ const loginValidation = [
     .notEmpty().withMessage('Password is required')
 ];
 
+const profileUpdateValidation = [
+  usernameProfileValidation
+];
+
+const deleteAccountValidation = [
+  body('password').notEmpty().withMessage('Password is required for confirmation')
+];
+
 export {
   registerValidation,
-  loginValidation
+  loginValidation,
+  profileUpdateValidation,
+  deleteAccountValidation
 };

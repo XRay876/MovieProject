@@ -43,4 +43,20 @@ router.post(
 
 router.get('/me', authGuard, authController.me);
 
+router.put(
+  '/profile',
+  authGuard,
+  validations.updateProfileValidation,
+  validateRequest,
+  authController.updateProfile
+);
+
+router.delete(
+  '/profile',
+  authGuard,
+  validations.deleteAccountValidation,
+  validateRequest,
+  authController.deleteAccount
+);
+
 export default router;

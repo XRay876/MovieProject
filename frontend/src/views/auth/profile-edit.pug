@@ -1,0 +1,17 @@
+extends ../layouts/base.pug
+
+block content
+  .container
+    h1 Edit Profile
+    form(action="/profile/edit" method="POST")
+      if errors && errors.length > 0
+        ul.form-errors
+          each error in errors
+            li= error.msg
+      .form-group
+        label(for="username") Username:
+        input#username.form-control(type="text" name="username" value=user.username || '')
+      .form-group
+        button.btn.btn-primary(type="submit") Update Username
+      .form-group
+        a(href="/profile" class="btn btn-secondary") Cancel

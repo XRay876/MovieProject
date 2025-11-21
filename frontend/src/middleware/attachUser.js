@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
 import config from '../config/env.js';
+import authClient from '../api/auth.client.js';
 
 const ACCESS_COOKIE = 'access_token';
 
-function attachUser(req, res, next) {
+async function attachUser(req, res, next) {
   let token = null;
 
   const authHeader = req.headers.authorization || '';
@@ -22,15 +22,12 @@ function attachUser(req, res, next) {
   }
 
   try {
-    const payload = jwt.verify(token, config.jwt.accessSecret);
-    const user = {
-      id: payload.sub,
-      email: payload.email,
-      username: payload.username
-    };
+    const { user } = await authClient.getMe(token);
     req.user = user;
     res.locals.currentUser = user;
-  } catch {
+  } catch (error) {
+    // If the token is invalid or expired, clear the cookie and treat as unauthenticated
+    res.clearCookie(ACCESS_COOKIE);
     res.locals.currentUser = null;
   }
 
