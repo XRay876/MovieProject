@@ -7,21 +7,26 @@ block content
     include ../partials/_formErrors.pug
 
     form(method="post" action="/movies")
-      label(for="name") Name
-      input(type="text" name="name" id="name" value=movie.name)
+      .form-group
+        label(for="name") Name
+        input(type="text" name="name" id="name" value=movie.name class="form-control")
 
-      label(for="description") Description
-      textarea(name="description" id="description")= movie.description
+      .form-group
+        label(for="description") Description
+        textarea(name="description" id="description" class="form-control")= movie.description
 
-      label(for="year") Year
-      input(type="number" name="year" id="year" value=movie.year)
+      .form-group
+        label(for="year") Year
+        input(type="number" name="year" id="year" value=movie.year class="form-control")
 
-      label(for="genres") Genres
-      select(name="genres" id="genres" multiple)
-        each g in genres
-          option(value=g selected=(movie.genres && movie.genres.includes(g))) #{g}
+      .form-group
+        label(for="genres") Genres
+        select(name="genres" id="genres" multiple class="form-control")
+          each g in genres
+            option(value=g selected=(movie.genres && movie.genres.includes(g))) #{g}
 
-      label(for="rating") Rating (0-10)
-      input(type="number" step="0.1" min="0" max="10" name="rating" id="rating" value=movie.rating)
+      .form-group
+        label(for="rating") Rating (0-10)
+        input(type="number" step="0.1" min="0" max="10" name="rating" id="rating" value=movie.rating class="form-control")
 
-      button(type="submit") Create
+      button(type="submit" class="button") Create

@@ -4,22 +4,26 @@ block content
   .container
     h1 Movies
 
-    form(method="get" action="/movies" class="search-form")
-      input(type="text" name="q" placeholder="Search..." value=(query && query.q) )
-      select(name="genre")
-        option(value="") All genres
-        each g in genres
-          if query && query.genre == g
-            option(value=g selected) #{g}
-          else
-            option(value=g) #{g}
-      input(type="number" name="year" placeholder="Year" value=(query && query.year))
-      select(name="sort")
-        option(value="created_desc" selected=(query && query.sort === 'created_desc')) Newest
-        option(value="created_asc" selected=(query && query.sort === 'created_asc')) Oldest
-        option(value="rating_desc" selected=(query && query.sort === 'rating_desc')) Rating (high first)
-        option(value="rating_asc" selected=(query && query.sort === 'rating_asc')) Rating (low first)
-      button(type="submit") Filter
+    form(method="get" action="/movies" class="search-filter-form")
+      .form-group
+        input(type="text" name="q" placeholder="Search..." value=(query && query.q) class="form-control")
+      .form-group
+        select(name="genre" class="form-control")
+          option(value="") All genres
+          each g in genres
+            if query && query.genre == g
+              option(value=g selected) #{g}
+            else
+              option(value=g) #{g}
+      .form-group
+        input(type="number" name="year" placeholder="Year" value=(query && query.year) class="form-control")
+      .form-group
+        select(name="sort" class="form-control")
+          option(value="created_desc" selected=(query && query.sort === 'created_desc')) Newest
+          option(value="created_asc" selected=(query && query.sort === 'created_asc')) Oldest
+          option(value="rating_desc" selected=(query && query.sort === 'rating_desc')) Rating (high first)
+          option(value="rating_asc" selected=(query && query.sort === 'rating_asc')) Rating (low first)
+      button(type="submit" class="button") Filter
 
     if currentUser
       p

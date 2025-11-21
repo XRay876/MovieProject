@@ -10,16 +10,20 @@ block content
           li #{e.msg}
 
     form(method="post" action="/auth/register")
-      label(for="username") Username
-      input#username(type="text" name="username" value=(values && values.username) )
+      .form-group
+        label(for="username") Username
+        input#username(type="text" name="username" value=(values && values.username) class="form-control")
 
-      label(for="email") Email
-      input#email(type="email" name="email" value=(values && values.email) )
+      .form-group
+        label(for="email") Email
+        input#email(type="email" name="email" value=(values && values.email) class="form-control")
 
-      label(for="password") Password
-      input#password(type="password" name="password")
+      .form-group
+        label(for="password") Password
+        input#password(type="password" name="password" class="form-control")
 
-      label(for="confirmPassword") Confirm Password
-      input#confirmPassword(type="password" name="confirmPassword")
+      .form-group
+        label(for="confirmPassword") Confirm Password
+        input#confirmPassword(type="password" name="confirmPassword" class="form-control")
 
-      button(type="submit") Register
+      button(type="submit" class="button") Register

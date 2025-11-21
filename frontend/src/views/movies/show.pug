@@ -3,15 +3,30 @@ extends ../layouts/base
 block content
   .container
     h1 #{movie.name}
-    p.year #{movie.year} • Rating: #{movie.rating}
-    p.desc #{movie.description}
-    p Genres:
-      each g in movie.genres
-        span.genre-tag #{g}
+
+    .form-group
+      label Name
+      p.form-control-static #{movie.name}
+
+    .form-group
+      label Year
+      p.form-control-static #{movie.year}
+
+    .form-group
+      label Rating
+      p.form-control-static #{movie.rating}
+
+    .form-group
+      label Description
+      p.form-control-static #{movie.description}
+
+    .form-group
+      label Genres
+      div
+        each g in movie.genres
+          span.genre-tag #{g}
 
     if isOwner
-      form(method="get" action=`/movies/${movie._id}/edit`)
-        button(type="submit") Edit
-
-      form(method="post" action=`/movies/${movie._id}/delete`)
-        button(type="submit" class="danger") Delete
+      .movie-actions
+        button(type="button" id="edit-movie-button" class="button" data-movie-id=movie._id) Edit
+        button(type="button" id="delete-movie-button" class="button danger" data-movie-id=movie._id) Delete

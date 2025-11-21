@@ -13,8 +13,7 @@ html
           if currentUser
             li Hello #{currentUser.username}
             li
-              form(action="/auth/logout" method="post")
-                button(type="submit") Logout
+              a(href="/auth/logout" id="logout-link") Logout
             li
               a(href="/movies/new") Add Movie
           else
@@ -22,9 +21,9 @@ html
               a(href="/auth/login") Login
             li
               a(href="/auth/register") Register
-    main
-      block content
+    block content
 
     script(src="/js/alerts.js")
     script(src="/js/search.js")
     script(src="/js/movies.js")
+    

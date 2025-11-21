@@ -10,10 +10,12 @@ block content
           li #{e.msg}
 
     form(method="post" action="/auth/login")
-      label(for="emailOrUsername") Email or Username
-      input#emailOrUsername(type="text" name="emailOrUsername" value=(values && values.emailOrUsername) )
+      .form-group
+        label(for="emailOrUsername") Email or Username
+        input#emailOrUsername(type="text" name="emailOrUsername" value=(values && values.emailOrUsername) class="form-control")
 
-      label(for="password") Password
-      input#password(type="password" name="password")
+      .form-group
+        label(for="password") Password
+        input#password(type="password" name="password" class="form-control")
 
-      button(type="submit") Login
+      button(type="submit" class="button") Login
