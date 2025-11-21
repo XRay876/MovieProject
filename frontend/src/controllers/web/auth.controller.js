@@ -1,5 +1,5 @@
-import authClient from '../api/auth.client.js';
-import ApiError from '../utils/ApiError.js';
+import authClient from '../../api/auth.client.js';
+import ApiError from '../../utils/ApiError.js';
 
 const ACCESS_COOKIE = 'access_token';
 const REFRESH_COOKIE = 'refresh_token';
@@ -31,7 +31,6 @@ function clearAuthCookies(res, req) {
   res.clearCookie(ACCESS_COOKIE, cookieOpts);
   res.clearCookie(REFRESH_COOKIE, cookieOpts);
 }
-
 
 function showLoginForm(req, res) {
   if (req.user) {
@@ -69,10 +68,13 @@ async function register(req, res, next) {
       msg: e.message || e.msg || err.message,
       field: e.field || e.param
     }));
-    return res.status(err.statusCode || 400).render('auth/register', {
-      errors: errors.length ? errors : [{ msg: err.message }],
-      values: req.body
-    });
+
+    return res
+      .status(err.statusCode || 400)
+      .render('auth/register', {
+        errors: errors.length ? errors : [{ msg: err.message }],
+        values: req.body
+      });
   }
 }
 
@@ -96,10 +98,13 @@ async function login(req, res, next) {
       msg: e.message || e.msg || err.message,
       field: e.field || e.param
     }));
-    return res.status(err.statusCode || 400).render('auth/login', {
-      errors: errors.length ? errors : [{ msg: err.message }],
-      values: req.body
-    });
+
+    return res
+      .status(err.statusCode || 400)
+      .render('auth/login', {
+        errors: errors.length ? errors : [{ msg: err.message }],
+        values: req.body
+      });
   }
 }
 
@@ -141,7 +146,11 @@ async function refresh(req, res, next) {
     });
   } catch (err) {
     clearAuthCookies(res, req);
-    return next(err instanceof ApiError ? err : new ApiError(err.statusCode || 401, err.message));
+    return next(
+      err instanceof ApiError
+        ? err
+        : new ApiError(err.statusCode || 401, err.message)
+    );
   }
 }
 

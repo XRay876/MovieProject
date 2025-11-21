@@ -6,7 +6,7 @@ block content
 
     include ../partials/_formErrors.pug
 
-    form(method="post" action=`/movies/${movie._id}?_method=POST`)
+    form(method="post" action=`/movies/${movie._id}`)
       label(for="name") Name
       input(type="text" name="name" id="name" value=movie.name)
 

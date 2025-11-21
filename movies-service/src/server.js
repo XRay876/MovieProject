@@ -12,6 +12,6 @@ async function startServer() {
 }
 
 startServer().catch(err => {
-  logger.error('Failed to start server', err);
+  logger.error('Failed to start movies-service server', err);
   process.exit(1);
 });

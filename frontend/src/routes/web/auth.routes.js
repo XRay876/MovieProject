@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import validateRequest from '../middleware/validateRequest.js';
+import validateRequest from '../../middleware/validateRequest.js';
 import {
   registerValidation,
   loginValidation
-} from '../validation/auth.validation.js';
+} from '../../validation/auth.validation.js';
 import {
   showLoginForm,
   showRegisterForm,
@@ -11,11 +11,12 @@ import {
   login,
   logout,
   refresh
-} from '../controllers/auth.controller.js';
+} from '../../controllers/web/auth.controller.js';
 
 const router = Router();
 
 router.get('/auth/login', showLoginForm);
+
 router.get('/auth/register', showRegisterForm);
 
 router.post(

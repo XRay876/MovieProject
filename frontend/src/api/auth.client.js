@@ -1,8 +1,8 @@
-import fetch from 'node-fetch';
 import config from '../config/env.js';
 
-const BASE_URL = config.authService.baseUrl;
-const TIMEOUT = config.authService.timeout;
+const BASE_URL = config.services.auth.baseUrl;
+const TIMEOUT = config.services.auth.timeout;
+
 
 async function callAuthService(path, { method = 'POST', body, headers = {} } = {}) {
   const controller = new AbortController();

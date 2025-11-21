@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import validateRequest from '../../middleware/validateRequest.js';
 import authGuard from '../../middleware/authGuard.js';
-import isOwner from '../../middleware/isOwner.js';
+import validateRequest from '../../middleware/validateRequest.js';
 import {
   createMovieValidation,
   updateMovieValidation
@@ -32,17 +31,16 @@ router.post(
 
 router.get('/movies/:id', showMoviePage);
 
-router.get('/movies/:id/edit', authGuard, isOwner, showEditForm);
+router.get('/movies/:id/edit', authGuard, showEditForm);
 
 router.post(
   '/movies/:id',
   authGuard,
-  isOwner,
   updateMovieValidation,
   validateRequest,
   updateMovieHandler
 );
 
-router.post('/movies/:id/delete', authGuard, isOwner, deleteMovieHandler);
+router.post('/movies/:id/delete', authGuard, deleteMovieHandler);
 
 export default router;

@@ -11,8 +11,7 @@ async function isOwner(req, res, next) {
 
     if (!req.user || movie.owner.toString() !== req.user.id) {
       throw new ApiError(403, 'You are not allowed to modify this movie');
-    }
-
+    }   
     req.movie = movie;
     return next();
   } catch (err) {
