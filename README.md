@@ -33,8 +33,12 @@ This project is a full-stack microservices application composed of three distinc
     ```
 
 2.  **Install dependencies:**
-    You must install dependencies for **each** service folder.
+    You can install dependencies for all services at once using the root script:
+    ```bash
+    npm run install-all
+    ```
 
+    Alternatively, you can install them individually:
     ```bash
     # Install Auth Service dependencies
     cd auth-service
@@ -60,8 +64,8 @@ Create a `.env` file in `auth-service/` and add:
 PORT=4000
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/auth_service
-JWT_ACCESS_SECRET=8a3F448kBYd71JOvJRYAaYB2asiWW7wN
-JWT_REFRESH_SECRET=hKX7psASVcOAlMAJ1w7fJZuDeJZ6sVE1
+JWT_ACCESS_SECRET=replace_with_your_secure_access_secret
+JWT_REFRESH_SECRET=replace_with_your_secure_refresh_secret
 JWT_ACCESS_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
 BCRYPT_SALT_ROUNDS=10
@@ -74,7 +78,7 @@ Create a `.env` file in `movies-service/` and add:
 PORT=3001
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/movies_app
-JWT_ACCESS_SECRET=8a3F448kBYd71JOvJRYAaYB2asiWW7wN
+JWT_ACCESS_SECRET=replace_with_your_secure_access_secret
 CORS_ORIGIN=http://localhost:3000
 AUTH_SERVICE_URL=http://localhost:4000
 AUTH_SERVICE_TIMEOUT=5000
@@ -87,14 +91,19 @@ PORT=3000
 NODE_ENV=development
 AUTH_SERVICE_URL=http://localhost:4000
 MOVIES_SERVICE_URL=http://localhost:3001
-JWT_ACCESS_SECRET=8a3F448kBYd71JOvJRYAaYB2asiWW7wN
+JWT_ACCESS_SECRET=replace_with_your_secure_access_secret
 ```
 
 **Important:** Ensure `JWT_ACCESS_SECRET` matches across all services so tokens can be correctly verified.
 
 ## Running the Application
 
-Since these are separate microservices, you need to run them in separate terminal windows.
+You can run all services simultaneously using the root script:
+```bash
+npm run start-all
+```
+
+Alternatively, you can run each service independently in separate terminals:
 
 **Terminal 1: Auth Service**
 ```bash
@@ -119,5 +128,5 @@ Once all services are running, open your browser and visit:
 
 ## Development Notes
 
--   **Nodemon:** The `npm run dev` command uses `nodemon` to automatically restart the server when file changes are detected.
--   **Production:** Use `npm start` to run the services with standard `node`.
+-   **Nodemon:** The `npm run dev` command (used in individual service folders) uses `nodemon` to automatically restart the server when file changes are detected.
+-   **Production:** The `npm run start-all` command runs the services in standard mode (using `node` instead of `nodemon`).
