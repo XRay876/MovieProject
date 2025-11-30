@@ -4,15 +4,16 @@ html
     title Movies App
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="icon" type="image/svg+xml" href="/icons/favicon.svg")
     link(rel="stylesheet" href="/css/main.css")
   body
     header
       nav.navbar
-        a(href="/") Movies App
+        a(href="/movies") Movies App
         ul.nav-links
           if currentUser
             li
-              a(href="/profile") Hello #{currentUser.username}
+              a(href="/profile") Hello #[strong #{currentUser.username}]
             li
               a(href="/auth/logout" id="logout-link") Logout
             li
@@ -24,6 +25,11 @@ html
               a(href="/auth/register") Register
     block content
 
+    if flashMessage
+      script.
+        window.__FLASH_MESSAGE__ = !{JSON.stringify(flashMessage)};
+    script(src="/js/notifications.js")
+    
     script(src="/js/alerts.js")
     script(src="/js/search.js")
     script(src="/js/movies.js")

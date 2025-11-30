@@ -1,0 +1,142 @@
+/* Home page specific styles */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #0b1120; /* dark background for hero contrast */
+  color: #e5e7eb;
+}
+
+/* Center the hero on the page */
+.home-hero {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border-radius: 24px;
+  color: #e5e7eb;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 2rem;
+  box-shadow: 0 24px 40px rgba(15, 23, 42, 0.5);
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+    margin: 1.5rem;
+  }
+}
+
+.home-hero__title {
+  font-size: 2.4rem;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.03em;
+}
+
+.home-hero__title span {
+  color: #38bdf8;
+}
+
+.home-hero__subtitle {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #cbd5f5;
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 10px 20px rgba(56, 189, 248, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.home-hero__button:hover {
+  background: #0ea5e9;
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(56, 189, 248, 0.6);
+}
+
+.home-hero__button span {
+  white-space: nowrap;
+}
+
+.home-hero__hint {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.home-hero__hint a {
+  color: #e5e7eb;
+  text-decoration: underline;
+}
+
+.home-hero__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.home-card {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 18px;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.home-card--secondary {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.home-card__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+}
+
+.home-card__subtitle {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.home-card__list,
+.home-card__steps {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+.home-card__list li,
+.home-card__steps li {
+  margin-bottom: 0.35rem;
+}
+
+.home-footer-blurb {
+  max-width: 900px;
+  margin: 1rem auto 3rem;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.home-footer-blurb strong {
+  font-weight: 600;
+  margin: 0 0.15rem;
+}

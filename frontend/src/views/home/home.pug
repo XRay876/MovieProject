@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    title Home – Movies Console
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="icon" type="image/svg+xml" href="/icons/favicon.svg")
+    link(rel="stylesheet" href="/css/home.css")
+  body
+    .home-hero
+      .home-hero__content
+        h1.home-hero__title
+          | Welcome to 
+          span Movies Console
+        p.home-hero__subtitle
+          | Discover, track, and manage your favorite movies in one simple console.
+          |  Rate them, filter by genres, and add your own movies.
+
+        .home-hero__actions
+          a.home-hero__button(href="/movies")
+            span Enter Movies Console →
+          if !currentUser
+            p.home-hero__hint
+              | New here? 
+              a(href="/auth/register") Create an account
+              |  or 
+              a(href="/auth/login") log in
+
+      .home-hero__aside
+        .home-card
+          h2.home-card__title Why Movies Console?
+          ul.home-card__list
+            li Track all movies
+            li Filter by genres, year and rating
+            li Quickly see details and update your ratings
+            li Secure access with JWT-based authentication
+
+        .home-card.home-card--secondary
+          h3.home-card__subtitle Quick start
+          ol.home-card__steps
+            li Sign up or log in
+            li Add your first movie
+            li Explore and manage movies
+
+    .home-footer-blurb
+      p
+        | CPAN-212 Semester 3 Final Project:
+        strong Timofei, Mark, Khang, Reynard
+        
