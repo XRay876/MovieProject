@@ -48,7 +48,7 @@ async function createMovieHandler(req, res, next) {
       req.accessToken
     );
 
-    return res.redirect(`/movies/${movie._id}`);
+    return res.redirect(`/movies/${movie._id}?flash=movie-created`);
   } catch (err) {
     const errors = (err.details || []).map(e => ({
       msg: e.message || e.msg || err.message,
@@ -115,7 +115,7 @@ async function updateMovieHandler(req, res, next) {
       req.accessToken
     );
 
-    return res.redirect(`/movies/${updated._id}`);
+    return res.redirect(`/movies/${updated._id}?flash=movie-updated`);
   } catch (err) {
     const errors = (err.details || []).map(e => ({
       msg: e.message || e.msg || err.message,
@@ -138,7 +138,7 @@ async function deleteMovieHandler(req, res, next) {
     // const accessToken = req.cookies && req.cookies.access_token;
 
     await moviesClient.deleteMovie(id, req.accessToken);
-    return res.redirect('/movies');
+    return res.redirect('/movies?flash=movie-deleted');
   } catch (err) {
     return next(err);
   }

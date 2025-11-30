@@ -1,10 +1,11 @@
-console.log('alerts.js loaded');
-
 document.addEventListener('DOMContentLoaded', () => {
     const logoutLink = document.getElementById('logout-link');
     if (logoutLink) {
         logoutLink.addEventListener('click', async (e) => {
             e.preventDefault();
+
+            if (!confirm('Are you sure you want to logout?')) return;
+
             try {
                 const response = await fetch('/auth/logout', {
                     method: 'POST',
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                 });
                 if (response.ok) {
-                    window.location.href = '/';
+                    window.location.href = '/movies/?flash=logout-success';
                 } else {
                     console.error('Logout failed:', response.statusText);
                     alert('Logout failed. Please try again.');

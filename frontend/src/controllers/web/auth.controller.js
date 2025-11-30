@@ -62,7 +62,7 @@ async function register(req, res, next) {
     });
 
     setAuthCookies(res, req, data.tokens);
-    return res.redirect('/movies');
+    return res.redirect('/movies?flash=register-success');
   } catch (err) {
     const errors = (err.details || []).map(e => ({
       msg: e.message || e.msg || err.message,
@@ -92,7 +92,7 @@ async function login(req, res, next) {
     });
 
     setAuthCookies(res, req, data.tokens);
-    return res.redirect('/movies');
+    return res.redirect('/movies?flash=login-success');
   } catch (err) {
     const errors = (err.details || []).map(e => ({
       msg: e.message || e.msg || err.message,
@@ -115,10 +115,10 @@ async function logout(req, res, next) {
       await authClient.logout({ refreshToken });
     }
     clearAuthCookies(res, req);
-    return res.redirect('/');
+    return res.redirect('/movies/?flash=logout-success');
   } catch (err) {
     clearAuthCookies(res, req);
-    return res.redirect('/');
+    return res.redirect('/movies/?flash=logout-success');
   }
 }
 

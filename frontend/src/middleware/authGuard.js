@@ -35,6 +35,7 @@ async function authGuard(req, res, next) {
   try {
     const payload = jwt.verify(token, config.jwt.accessSecret);
     req.user = {
+      ...(req.user || {}), 
       id: payload.sub,
       email: payload.email,
       username: payload.username

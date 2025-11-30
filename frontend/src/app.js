@@ -12,6 +12,7 @@ import moviesWebRoutes from './routes/web/movies.routes.js';
 import attachUser from './middleware/attachUser.js';
 import notFound from './middleware/notFound.js';
 import errorHandler from './middleware/errorHandler.js';
+import flash from './middleware/flash.js';
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(attachUser);
+app.use(flash);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'frontend', env: config.env });
